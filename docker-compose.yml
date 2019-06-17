@@ -1,0 +1,122 @@
+# http://docs.docker.jp/compose/rails.html
+# https://hub.docker.com/_/mysql/
+version: '3.7'
+services:
+
+  # postgres:
+  #   image: postgres
+  #   restart: always
+  #   environment:
+  #     POSTGRES_PASSWORD: example
+  #   volumes:
+  #     - ./postgres:/var/lib/postgresql
+
+
+  # mysql:
+  #   image: mysql
+  #   restart: always
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: example
+  #   volumes:
+  #     - ./mysql:/var/lib/mysql
+
+
+  # mongo:
+  #   image: mongo
+  #   restart: always
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: example
+  #   volumes:
+  #     - ./mongo:/data
+
+  # mongo-express:
+  #   image: mongo-express
+  #   restart: always
+  #   ports:
+  #     - '8081:8081'
+  #   environment:
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: example
+
+
+  # localstack:
+  #   image: localstack/localstack
+  #   ports:
+  #     - '4567-4584:4567-4584'
+  #     - '5000:5000'
+  #   environment:
+  #     DEFAULT_REGION: ap-notrheast-1
+  #     HOSTNAME: localstack
+  #     HOSTNAME_EXTERNAL: localstack
+  #     DATA_DIR: /tmp/localstack/data
+  #     PORT_WEB_UI: 5000
+  #     USE_SSL: 1
+  #   volumes:
+  #     - ./localstack:/tmp/localstack
+
+
+  # dynamodb-admin:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile.dynamodb-admin
+  #   command: dynamodb-admin
+  #   ports:
+  #     - '5001:8001'
+  #   depends_on:
+  #     - localstack
+  #   environment:
+  #     DYNAMO_ENDPOINT: http://localstack:4569
+  #     AWS_REGION: ap-notrheast-1
+
+
+  # rails:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile.rails
+  #   container_name: rails
+  #   command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
+  #   environment:
+  #     LANG: C.UTF-8
+  #     EDITOR: vim
+  #     PATH: $PATH:~/
+  #   depends_on:
+  #     # - postgres
+  #     - mysql
+  #   volumes:
+  #     - ./rails:/app
+  #     - /app/vendor
+  #     - /app/tmp
+  #     - /app/log
+  #     - /app/.git
+  #   tty: true
+  #   stdin_open: true
+
+
+  node:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.node
+    container_name: node
+    command: /bin/bash
+    volumes:
+      - ./node:/app
+
+
+  # https-portal:
+  #   image: steveltn/https-portal:1
+  #   container_name: https-portal
+  #   restart: always
+  #   ports:
+  #     - '80:80'
+  #     - '443:443'
+  #   links:
+  #     # - rails
+  #     - node
+  #   environment:
+  #     WEBSOCKET: 'true'
+  #     DOMAINS: 'loopback.forgxisto.com -> http://node:8000/'
+  #     STAGE: local
+  #   volumes:
+  #     - ./https-portal:/var/lib/https-portal
