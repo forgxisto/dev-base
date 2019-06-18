@@ -71,37 +71,37 @@ services:
   #     AWS_REGION: ap-notrheast-1
 
 
-  # rails:
+  # ruby:
   #   build:
   #     context: .
-  #     dockerfile: ./Dockerfile.rails
-  #   container_name: rails
-  #   command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
+  #     dockerfile: ./Dockerfile.ruby
+  #   container_name: ruby
+  #   ports:
+  #     - '3000:3000'
+  #   # command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
   #   environment:
   #     LANG: C.UTF-8
   #     EDITOR: vim
-  #     PATH: $PATH:~/
-  #   depends_on:
+  #     PATH: $PATH:/go/bin/:~/
+  #   # depends_on:
   #     # - postgres
-  #     - mysql
+  #     # - mysql
   #   volumes:
-  #     - ./rails:/app
-  #     - /app/vendor
-  #     - /app/tmp
-  #     - /app/log
-  #     - /app/.git
+  #     - ./ruby:/app
   #   tty: true
-  #   stdin_open: true
 
 
-  node:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.node
-    container_name: node
-    command: /bin/bash
-    volumes:
-      - ./node:/app
+  # node:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile.node
+  #   container_name: node
+  #   # command: bash -c 'gatsby develop --host 0.0.0.0'
+  #   ports:
+  #     - '8000:8000'
+  #   volumes:
+  #     - ./node:/app
+  #   tty: true
 
 
   # https-portal:
