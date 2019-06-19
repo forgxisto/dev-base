@@ -19,6 +19,7 @@ RUN apt-get -y -qq update \
   && apt-get -y install tmux \
   && apt-get -y install golang
 
+# overmind
 RUN go get -u -f github.com/DarthSim/overmind
 
 # エイリアス

@@ -5,3 +5,5 @@ localstack
 mongo
 mysql
 postgres
+ruby/vendor/bundle
+node/node_modules

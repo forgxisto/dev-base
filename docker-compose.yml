@@ -7,7 +7,7 @@ services:
   #   image: postgres
   #   restart: always
   #   environment:
-  #     POSTGRES_PASSWORD: example
+  #     POSTGRES_PASSWORD: password
   #   volumes:
   #     - ./postgres:/var/lib/postgresql
 
@@ -17,7 +17,7 @@ services:
   #   restart: always
   #   command: --default-authentication-plugin=mysql_native_password
   #   environment:
-  #     MYSQL_ROOT_PASSWORD: example
+  #     MYSQL_ROOT_PASSWORD: password
   #   volumes:
   #     - ./mysql:/var/lib/mysql
 
@@ -27,7 +27,7 @@ services:
   #   restart: always
   #   environment:
   #     MONGO_INITDB_ROOT_USERNAME: root
-  #     MONGO_INITDB_ROOT_PASSWORD: example
+  #     MONGO_INITDB_ROOT_PASSWORD: password
   #   volumes:
   #     - ./mongo:/data
 
@@ -38,7 +38,7 @@ services:
   #     - '8081:8081'
   #   environment:
   #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
-  #     ME_CONFIG_MONGODB_ADMINPASSWORD: example
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: password
 
 
   # localstack:
@@ -56,11 +56,10 @@ services:
   #   volumes:
   #     - ./localstack:/tmp/localstack
 
-
   # dynamodb-admin:
   #   build:
   #     context: .
-  #     dockerfile: ./Dockerfile.dynamodb-admin
+  #     dockerfile: ./Dockerfiles/dynamodb-admin.Dockerfile
   #   command: dynamodb-admin
   #   ports:
   #     - '5001:8001'
@@ -71,30 +70,31 @@ services:
   #     AWS_REGION: ap-notrheast-1
 
 
-  # ruby:
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile.ruby
-  #   container_name: ruby
-  #   ports:
-  #     - '3000:3000'
-  #   # command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
-  #   environment:
-  #     LANG: C.UTF-8
-  #     EDITOR: vim
-  #     PATH: $PATH:/go/bin/:~/
-  #   # depends_on:
-  #     # - postgres
-  #     # - mysql
-  #   volumes:
-  #     - ./ruby:/app
-  #   tty: true
-
+  ruby:
+    build:
+      context: .
+      dockerfile: ./Dockerfiles/ruby.Dockerfile
+    container_name: ruby
+    ports:
+      - '3000:3000'
+    # command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
+    environment:
+      LANG: C.UTF-8
+      EDITOR: vim
+      PATH: $PATH:/go/bin/:~/
+      BUNDLE_PATH: /bundle
+    # depends_on:
+    #   - postgres
+      # - mysql
+    volumes:
+      - ./ruby:/app
+      - gems_cache:/bundle
+    tty: true
 
   # node:
   #   build:
   #     context: .
-  #     dockerfile: ./Dockerfile.node
+  #     dockerfile: ./Dockerfiles/node.Dockerfile
   #   container_name: node
   #   # command: bash -c 'gatsby develop --host 0.0.0.0'
   #   ports:
@@ -120,3 +120,7 @@ services:
   #     STAGE: local
   #   volumes:
   #     - ./https-portal:/var/lib/https-portal
+
+volumes:
+  gems_cache:
+    driver: local
