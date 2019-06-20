@@ -17,7 +17,6 @@ docker-compose down
 ### 一括削除
 
 `-a` オプションをつけるととにかく全部消せる
-
 ```
 docker system prune      # 未使用まとめて（ネットワーク、コンテナ、イメージ）
 docker container prune   # 未使用コンテナ
@@ -81,7 +80,6 @@ rails: bundle exec rails s -b 0.0.0.0 -p 3000
 ```
 
 docker-compose.ymlのcommandを追加して `up` したら `rails s` するようにする
-
 ```
 version: '3.7'
 services:
