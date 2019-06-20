@@ -13,9 +13,8 @@ RUN apt-get -y -qq update \
   && apt-get -y install python3
 
 RUN curl -kL https://bootstrap.pypa.io/get-pip.py | python3 \
-  && pip3 install awscli \
-  && pip3 install awscli-local
+  && pip3 install awscli
 
-RUN npm install --global gatsby \
+RUN npm install --global gatsby-cli \
   && npm install --global @aws-amplify/cli \
   && npm install --global serverless

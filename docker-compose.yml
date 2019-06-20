@@ -41,20 +41,20 @@ services:
   #     ME_CONFIG_MONGODB_ADMINPASSWORD: password
 
 
-  # localstack:
-  #   image: localstack/localstack
-  #   ports:
-  #     - '4567-4584:4567-4584'
-  #     - '5000:5000'
-  #   environment:
-  #     DEFAULT_REGION: ap-notrheast-1
-  #     HOSTNAME: localstack
-  #     HOSTNAME_EXTERNAL: localstack
-  #     DATA_DIR: /tmp/localstack/data
-  #     PORT_WEB_UI: 5000
-  #     USE_SSL: 1
-  #   volumes:
-  #     - ./localstack:/tmp/localstack
+  localstack:
+    image: localstack/localstack
+    ports:
+      - '4567-4584:4567-4584'
+      - '5000:5000'
+    environment:
+      DEFAULT_REGION: ap-notrheast-1
+      HOSTNAME: localstack
+      HOSTNAME_EXTERNAL: localstack
+      DATA_DIR: /tmp/localstack/data
+      PORT_WEB_UI: 5000
+      USE_SSL: 1
+    volumes:
+      - ./localstack:/tmp/localstack
 
   # dynamodb-admin:
   #   build:
@@ -70,37 +70,37 @@ services:
   #     AWS_REGION: ap-notrheast-1
 
 
-  ruby:
-    build:
-      context: .
-      dockerfile: ./Dockerfiles/ruby.Dockerfile
-    container_name: ruby
-    ports:
-      - '3000:3000'
-    # command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
-    environment:
-      LANG: C.UTF-8
-      EDITOR: vim
-      PATH: $PATH:/go/bin/:~/
-      BUNDLE_APP_CONFIG: /app/.bundle
-    # depends_on:
-    #   - postgres
-      # - mysql
-    volumes:
-      - ./ruby:/app
-    tty: true
-
-  # node:
+  # ruby:
   #   build:
   #     context: .
-  #     dockerfile: ./Dockerfiles/node.Dockerfile
-  #   container_name: node
-  #   # command: bash -c 'gatsby develop --host 0.0.0.0'
+  #     dockerfile: ./Dockerfiles/ruby.Dockerfile
+  #   container_name: ruby
   #   ports:
-  #     - '8000:8000'
+  #     - '3000:3000'
+  #   # command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
+  #   environment:
+  #     LANG: C.UTF-8
+  #     EDITOR: vim
+  #     PATH: $PATH:/go/bin/:~/
+  #     BUNDLE_APP_CONFIG: /app/.bundle
+  #   # depends_on:
+  #   #   - postgres
+  #     # - mysql
   #   volumes:
-  #     - ./node:/app
+  #     - ./ruby:/app
   #   tty: true
+
+  node:
+    build:
+      context: .
+      dockerfile: ./Dockerfiles/node.Dockerfile
+    container_name: node
+    # command: bash -c 'gatsby develop --host 0.0.0.0'
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./node:/app
+    tty: true
 
 
   # https-portal:
