@@ -28,7 +28,7 @@ docker image prune       # 未使用イメージ（中間イメージ、壊れ�
 
 * 初期イメージの中身はDockerfiles/ruby.Dockerfileを参照。
 * Procfileを作ればovermindでも起動できるようにしてある。
-* `bundle exec` のエイリアスは好みで。中に入らない限りあんまり使えないかも。
+* `bundle exec` のエイリアス代替スクリプトは好みで。手抜きしすぎ？
 
 ### 初めの rails new まで
 
@@ -36,14 +36,14 @@ docker image prune       # 未使用イメージ（中間イメージ、壊れ�
 docker-compose run ruby bundle init
   => Gemfileが作成されるのでrailsのコメントアウトを外す
 
-docker-compose run ruby bundle install
+docker-compose run ruby bundle install --path vendor/bundle
   => railsインストール
 
 docker-compose run ruby bundle exec rails new . --force --skip-bundle
   => Railsアプリケーション作成, オプションは任意（データベースなど）
   => Gemfileを適宜編集する
 
-docker-compose run ruby bundle install --jobs=3
+docker-compose run ruby bin/setup
   => アプリ用 gemインストール
 
 docker-compose run ruby bundle exec rake db:create db:create
@@ -79,6 +79,17 @@ https://github.com/DarthSim/overmind
 Procfileを作る
 ```
 rails: bundle exec rails s -b 0.0.0.0 -p 3000
+```
+
+docker-compose.ymlのcommandを追加して `up` したら `rails s` するようにする
+
+```
+version: '3.7'
+services:
+  ruby:
+    ~ 略 ~
+    command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
+    ~ 略 ~
 ```
 
 別ターミナルから（閉じるしかなくなるので）

@@ -22,5 +22,6 @@ RUN apt-get -y -qq update \
 # overmind
 RUN go get -u -f github.com/DarthSim/overmind
 
-# エイリアス
-RUN echo 'alias bex="bundle exec"' >> ~/.bashrc
+# エイリアスの代わり
+RUN echo '#!/bin/bash\nbundle exec $*' >> /usr/bin/bex \
+  && chmod +x /usr/bin/bex

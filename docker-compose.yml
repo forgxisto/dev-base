@@ -82,13 +82,12 @@ services:
       LANG: C.UTF-8
       EDITOR: vim
       PATH: $PATH:/go/bin/:~/
-      BUNDLE_PATH: /bundle
+      BUNDLE_APP_CONFIG: /app/.bundle
     # depends_on:
     #   - postgres
       # - mysql
     volumes:
       - ./ruby:/app
-      - gems_cache:/bundle
     tty: true
 
   # node:
@@ -120,7 +119,3 @@ services:
   #     STAGE: local
   #   volumes:
   #     - ./https-portal:/var/lib/https-portal
-
-volumes:
-  gems_cache:
-    driver: local
