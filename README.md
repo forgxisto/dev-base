@@ -139,7 +139,7 @@ docker-compose run node gatsby new .
 
 ## for Serverless
 
-* まぁ、amplify-cliと迷うよね
+* まぁ、sam-cliと迷うよね
 
   https://serverless.com
 
