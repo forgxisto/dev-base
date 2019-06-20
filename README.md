@@ -5,7 +5,7 @@
 dockerを基盤にして開発するための雛形です。
 このリポジトリをcloneした後は、プロジェクトに合わせて適宜編集してから使う想定です。
 
-# よく使う？Docker関連のコマンド
+## よく使う？Docker関連のコマンド
 
 ### 起動 & 終了
 
@@ -24,7 +24,7 @@ docker container prune   # 未使用コンテナ
 docker image prune       # 未使用イメージ（中間イメージ、壊れたやつとか）
 ```
 
-# for Rails
+## for Rails
 
 * 初期イメージの中身はDockerfiles/ruby.Dockerfileを参照。
 * Procfileを作ればovermindでも起動できるようにしてある。
@@ -66,7 +66,6 @@ docker-compose exec ruby bash
 ```
 docker-compose exec ruby bundle exec rails s -b 0.0.0.0
 ```
-
 
 ### overmind使う時
 
