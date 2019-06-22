@@ -58,7 +58,7 @@ docker container prune   # 未使用コンテナ
 docker image prune       # 未使用イメージ（中間イメージ、壊れたやつとか）
 ```
 
-## for Rails
+## rubyコンテナ for Rails
 
 * 初期イメージの中身はDockerfiles/ruby.Dockerfileを参照。
 * Procfileを作ればovermindでも起動できるようにしてある。
@@ -115,8 +115,20 @@ docker-compose exec ruby overmind c rails
   => overmindでrailsにコネクト
   => [ctrl]+[c]とかしちゃうとrails落とすことになるので気をつける
 ```
+## nodeコンテナ for Amplify
 
-## for React
+* amplify-cliはグローバルに置いてます。
+* team-provider-info.json は .gitignore 済み
+
+  https://aws-amplify.github.io/docs/cli/multienv
+
+* docker-compose.yml の環境変数で credential, config を渡す方針で。
+
+```
+docker-compose run node amplify init
+```
+
+## nodeコンテナ for React
 
 * `npx` 使えるならそっちで。
 * サーバ起動するときはhost, portに気をつけましょう
@@ -128,9 +140,9 @@ docker-compose run node npx create-react-app . --typescript
   => でけた
 ```
 
-## for Gatsby
+## nodeコンテナ for Gatsby
 
-* Dockerイメージにgatsby-cliインストール済み
+* gatsby-cliはグローバルに置いてます。
 * サーバ起動するときはhost, portに気をつけましょう
 
 #### gatsby new まで
@@ -142,8 +154,9 @@ docker-compose run node gatsby new .
   => でけた
 ```
 
-## for Serverless
+## nodeコンテナ for Serverless
 
+* serverlessはグローバルに置いてます。
 * まぁ、sam-cliと迷うよね
 
   https://serverless.com

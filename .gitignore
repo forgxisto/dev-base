@@ -7,3 +7,4 @@ mysql
 postgres
 ruby/vendor/bundle
 node/node_modules
+node/amplify/team-provider-info.json

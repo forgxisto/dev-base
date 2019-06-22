@@ -41,20 +41,20 @@ services:
   #     ME_CONFIG_MONGODB_ADMINPASSWORD: password
 
 
-  localstack:
-    image: localstack/localstack
-    ports:
-      - '4567-4584:4567-4584'
-      - '5000:5000'
-    environment:
-      DEFAULT_REGION: ap-notrheast-1
-      HOSTNAME: localstack
-      HOSTNAME_EXTERNAL: localstack
-      DATA_DIR: /tmp/localstack/data
-      PORT_WEB_UI: 5000
-      USE_SSL: 1
-    volumes:
-      - ./localstack:/tmp/localstack
+  # localstack:
+  #   image: localstack/localstack
+  #   ports:
+  #     - '4567-4584:4567-4584'
+  #     - '5000:5000'
+  #   environment:
+  #     DEFAULT_REGION: ap-notrheast-1
+  #     HOSTNAME: localstack
+  #     HOSTNAME_EXTERNAL: localstack
+  #     DATA_DIR: /tmp/localstack/data
+  #     PORT_WEB_UI: 5000
+  #     USE_SSL: 1
+  #   volumes:
+  #     - ./localstack:/tmp/localstack
 
   # dynamodb-admin:
   #   build:
@@ -83,6 +83,11 @@ services:
   #     EDITOR: vim
   #     PATH: $PATH:/go/bin/:~/
   #     BUNDLE_APP_CONFIG: /app/.bundle
+  #     AWS_ACCESS_KEY_ID: 'xxxxxxxxxxxxxxx'
+  #     AWS_SECRET_ACCESS_KEY: 'xxxxxxxxxxxxxxx'
+  #     AWS_DEFAULT_REGION: 'ap-northeast-1'
+  #     AWS_REGION: 'ap-northeast-1'
+  #     AWS_SESSION_TOKEN: 'xxxxxxxxxxxxxxx'
   #   # depends_on:
   #   #   - postgres
   #     # - mysql
@@ -98,6 +103,12 @@ services:
     # command: bash -c 'gatsby develop --host 0.0.0.0'
     ports:
       - '8000:8000'
+    environment:
+      AWS_ACCESS_KEY_ID: 'xxxxxxxxxxxxxxx'
+      AWS_SECRET_ACCESS_KEY: 'xxxxxxxxxxxxxxx'
+      AWS_DEFAULT_REGION: 'ap-northeast-1'
+      AWS_REGION: 'ap-northeast-1'
+      # AWS_SESSION_TOKEN: 'xxxxxxxxxxxxxxx'
     volumes:
       - ./node:/app
     tty: true

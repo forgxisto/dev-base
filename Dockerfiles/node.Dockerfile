@@ -12,9 +12,16 @@ RUN apt-get -y -qq update \
   && apt-get -y install libpng-dev \
   && apt-get -y install python3
 
+# aws-cli
 RUN curl -kL https://bootstrap.pypa.io/get-pip.py | python3 \
   && pip3 install awscli
 
+# aws-cli 用にダミーファイル作っておく
+RUN mkdir /root/.aws \
+  && echo '[default]\n' > /root/.aws/config \
+  && echo '[default]\n' > /root/.aws/credentials
+
+# グローバルに置いておきたいパッケージ
 RUN npm install --global gatsby-cli \
   && npm install --global @aws-amplify/cli \
   && npm install --global serverless

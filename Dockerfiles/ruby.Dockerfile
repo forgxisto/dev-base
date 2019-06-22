@@ -17,7 +17,12 @@ RUN apt-get -y -qq update \
   && apt-get -y install nodejs \
   && apt-get -y install vim \
   && apt-get -y install tmux \
-  && apt-get -y install golang
+  && apt-get -y install golang \
+  && apt-get -y install python3
+
+# aws-cli
+RUN curl -kL https://bootstrap.pypa.io/get-pip.py | python3 \
+  && pip3 install awscli
 
 # overmind
 RUN go get -u -f github.com/DarthSim/overmind
@@ -25,3 +30,8 @@ RUN go get -u -f github.com/DarthSim/overmind
 # エイリアスの代わり
 RUN echo '#!/bin/bash\nbundle exec $*' >> /usr/bin/bex \
   && chmod +x /usr/bin/bex
+
+# aws-cli 用にダミーファイル作っておく
+RUN mkdir /root/.aws \
+  && echo '[default]\n' > /root/.aws/config \
+  && echo '[default]\n' > /root/.aws/credentials
