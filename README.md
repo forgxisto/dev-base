@@ -5,6 +5,8 @@
 dockerを基盤にして開発するための雛形です。
 このリポジトリをcloneした後は、プロジェクトに合わせて適宜編集してから使う想定です。
 
+AWSなど外部サービスの認証情報を環境変数として渡す場合はEnviflesディレクトリ以下の.envに書いて渡す方針。
+
 **目次**
   - [よく使う？Docker関連のコマンド](#%E3%82%88%E3%81%8F%E4%BD%BF%E3%81%86Docker%E9%96%A2%E9%80%A3%E3%81%AE%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89)
       - [起動 & 終了](#%E8%B5%B7%E5%8B%95--%E7%B5%82%E4%BA%86)
@@ -20,6 +22,8 @@ dockerを基盤にして開発するための雛形です。
   - [for Gatsby](#for-Gatsby)
       - [gatsby new まで](#gatsby-new-%E3%81%BE%E3%81%A7)
   - [for Serverless](#for-Serverless)
+
+
 
 ## よく使う？Docker関連のコマンド
 
@@ -57,6 +61,8 @@ docker system prune      # 未使用まとめて（ネットワーク、コン�
 docker container prune   # 未使用コンテナ
 docker image prune       # 未使用イメージ（中間イメージ、壊れたやつとか）
 ```
+
+
 
 ## rubyコンテナ for Rails
 
@@ -115,6 +121,8 @@ docker-compose exec ruby overmind c rails
   => overmindでrailsにコネクト
   => [ctrl]+[c]とかしちゃうとrails落とすことになるので気をつける
 ```
+
+
 ## nodeコンテナ for Amplify
 
 * amplify-cliはグローバルに置いてます。
@@ -122,11 +130,11 @@ docker-compose exec ruby overmind c rails
 
   https://aws-amplify.github.io/docs/cli/multienv
 
-* docker-compose.yml の環境変数で credential, config を渡す方針で。
-
 ```
 docker-compose run node amplify init
 ```
+
+
 
 ## nodeコンテナ for React
 
@@ -139,6 +147,8 @@ docker-compose run node amplify init
 docker-compose run node npx create-react-app . --typescript
   => でけた
 ```
+
+
 
 ## nodeコンテナ for Gatsby
 
@@ -153,6 +163,8 @@ TypeScript のミニマムなスターターが欲しい・・
 docker-compose run node gatsby new .
   => でけた
 ```
+
+
 
 ## nodeコンテナ for Serverless
 
