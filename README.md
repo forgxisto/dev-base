@@ -14,15 +14,15 @@ AWSなど外部サービスの認証情報を環境変数として渡す場合�
       - [起動中のコンテナに入る（とりあえずbash）](#%E8%B5%B7%E5%8B%95%E4%B8%AD%E3%81%AE%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%81%AB%E5%85%A5%E3%82%8B%E3%81%A8%E3%82%8A%E3%81%82%E3%81%88%E3%81%9Abash)
       - [起動してないコンテナでコマンド実行する（初期セットアップとか）](#%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%A6%E3%81%AA%E3%81%84%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%81%A7%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B%E5%88%9D%E6%9C%9F%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97%E3%81%A8%E3%81%8B)
       - [一括削除](#%E4%B8%80%E6%8B%AC%E5%89%8A%E9%99%A4)
-  - [for Rails](#for-Rails)
+  - [rubyコンテナ for Rails](#ruby%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A-for-Rails)
       - [初めの rails new まで](#%E5%88%9D%E3%82%81%E3%81%AE-rails-new-%E3%81%BE%E3%81%A7)
       - [overmind使う時](#overmind%E4%BD%BF%E3%81%86%E6%99%82)
-  - [for React](#for-React)
+  - [nodeコンテナ for Amplify](#node%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A-for-Amplify)
+  - [nodeコンテナ for React](#node%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A-for-React)
       - [create-react-app を TypeScript で](#create-react-app-%E3%82%92-TypeScript-%E3%81%A7)
-  - [for Gatsby](#for-Gatsby)
+  - [nodeコンテナ for Gatsby](#node%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A-for-Gatsby)
       - [gatsby new まで](#gatsby-new-%E3%81%BE%E3%81%A7)
-  - [for Serverless](#for-Serverless)
-
+  - [nodeコンテナ for Serverless](#node%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A-for-Serverless)
 
 
 ## よく使う？Docker関連のコマンド
