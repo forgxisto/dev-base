@@ -6,9 +6,11 @@ FROM ruby:slim
 WORKDIR /app
 
 ENV GOPATH=/go
+ENV PATH="${PATH}:${GOPATH}/bin"
 
 RUN apt-get -y -qq update \
   && apt-get -y -qq upgrade \
+  && apt-get -y install curl \
   && apt-get -y install build-essential \
   && apt-get -y install git \
   && apt-get -y install libsqlite3-dev \

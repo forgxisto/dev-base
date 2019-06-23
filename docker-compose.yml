@@ -81,37 +81,29 @@ services:
   #   environment:
   #     LANG: C.UTF-8
   #     EDITOR: vim
-  #     PATH: $PATH:/go/bin/:~/
   #     BUNDLE_APP_CONFIG: /app/.bundle
-  #     AWS_ACCESS_KEY_ID: 'xxxxxxxxxxxxxxx'
-  #     AWS_SECRET_ACCESS_KEY: 'xxxxxxxxxxxxxxx'
-  #     AWS_DEFAULT_REGION: 'ap-northeast-1'
-  #     AWS_REGION: 'ap-northeast-1'
-  #     AWS_SESSION_TOKEN: 'xxxxxxxxxxxxxxx'
+  #   env_file:
+  #     - ./Envfiles/ruby.env
   #   # depends_on:
-  #   #   - postgres
+  #     # - postgres
   #     # - mysql
   #   volumes:
   #     - ./ruby:/app
   #   tty: true
 
-  node:
-    build:
-      context: .
-      dockerfile: ./Dockerfiles/node.Dockerfile
-    container_name: node
-    # command: bash -c 'gatsby develop --host 0.0.0.0'
-    ports:
-      - '8000:8000'
-    environment:
-      AWS_ACCESS_KEY_ID: 'xxxxxxxxxxxxxxx'
-      AWS_SECRET_ACCESS_KEY: 'xxxxxxxxxxxxxxx'
-      AWS_DEFAULT_REGION: 'ap-northeast-1'
-      AWS_REGION: 'ap-northeast-1'
-      # AWS_SESSION_TOKEN: 'xxxxxxxxxxxxxxx'
-    volumes:
-      - ./node:/app
-    tty: true
+  # node:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfiles/node.Dockerfile
+  #   container_name: node
+  #   # command: bash -c 'gatsby develop --host 0.0.0.0'
+  #   ports:
+  #     - '8000:8000'
+  #   env_file:
+  #     - ./Envfiles/node.env
+  #   volumes:
+  #     - ./node:/app
+  #   tty: true
 
 
   # https-portal:
