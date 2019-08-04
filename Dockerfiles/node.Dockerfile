@@ -10,7 +10,10 @@ RUN apt-get -y -qq update \
   && apt-get -y install build-essential \
   && apt-get -y install git \
   && apt-get -y install libpng-dev \
-  && apt-get -y install python3
+  && apt-get -y install python3 \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /var/tmp/* && \
+  truncate -s 0 /var/log/*log
 
 # aws-cli
 RUN curl -kL https://bootstrap.pypa.io/get-pip.py | python3 \

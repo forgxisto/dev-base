@@ -88,7 +88,8 @@ services:
   #     # - postgres
   #     # - mysql
   #   volumes:
-  #     - ./ruby:/app
+  #     - ./ruby:/app:cached
+  #     - ./ruby/bundle:/app/bundle
   #   tty: true
 
   # node:
@@ -102,7 +103,8 @@ services:
   #   env_file:
   #     - ./Envfiles/node.env
   #   volumes:
-  #     - ./node:/app
+  #     - ./node:/app:cached
+  #     - ./node/node_modules:/app/node_modules
   #   tty: true
 
 
