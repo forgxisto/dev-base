@@ -56,6 +56,25 @@ services:
   #   volumes:
   #     - ./localstack:/tmp/localstack
 
+  # sam:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfiles/sam.Dockerfile
+  #   container_name: sam
+  #   # command: bash -c 'sam local start-api --host 0.0.0.0'
+  #   ports:
+  #     - '3030:3000'
+  # #   depends_on:
+  # #     - localstack
+  #   environment:
+  #     SAM_DOCKER_VOLUME_BASEDIR: ${PWD}/sam
+  #   env_file:
+  #     - ./Envfiles/sam.env
+  #   volumes:
+  #     - ./sam:/app:cached
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   tty: true
+
   # dynamodb-admin:
   #   build:
   #     context: .
@@ -116,6 +135,9 @@ services:
   #     - '80:80'
   #     - '443:443'
   #   links:
+  #     # - rails
+  #     - node
+  #   depends_on:
   #     # - rails
   #     - node
   #   environment:

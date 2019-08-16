@@ -20,14 +20,13 @@ RUN apt-get -y -qq update \
   && apt-get -y install vim \
   && apt-get -y install tmux \
   && apt-get -y install golang \
-  && apt-get -y install python3 \
+  && apt-get -y install python-pip \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/* && \
   truncate -s 0 /var/log/*log
 
 # aws-cli
-RUN curl -kL https://bootstrap.pypa.io/get-pip.py | python3 \
-  && pip3 install awscli
+RUN  pip install awscli
 
 # aws-cli 用にダミーファイル作っておく
 RUN mkdir /root/.aws \

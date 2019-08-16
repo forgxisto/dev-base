@@ -176,3 +176,19 @@ docker-compose run node gatsby new .
 ```
 docker-compose run node serverless --template aws-ruby
 ```
+
+## samコンテナ
+
+* aws sam-cliはグローバルに置いてます。
+* まぁ、serverlessと迷うよね
+
+  https://github.com/awslabs/aws-sam-cli
+  https://aws.amazon.com/jp/serverless/sam/
+
+samアプリはsamディレクトリ直下に置いてください・・
+
+```
+docker-compose run sam sam init --runtime ruby
+cp -fr sam/app/* sam/
+rm -fr sam/app
+```
