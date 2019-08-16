@@ -184,7 +184,6 @@ docker-compose run sls serverless --template aws-ruby
 * まぁ、serverlessと迷うよね
 
   https://github.com/awslabs/aws-sam-cli
-  https://aws.amazon.com/jp/serverless/sam/
 
 samアプリはsamディレクトリ直下に置いてください・・
 
