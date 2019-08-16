@@ -8,21 +8,22 @@ dockerを基盤にして開発するための雛形です。
 AWSなど外部サービスの認証情報を環境変数として渡す場合はEnviflesディレクトリ以下の.envに書いて渡す方針。
 
 **目次**
-  - [よく使う？Docker関連のコマンド](#%E3%82%88%E3%81%8F%E4%BD%BF%E3%81%86Docker%E9%96%A2%E9%80%A3%E3%81%AE%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89)
-      - [起動 & 終了](#%E8%B5%B7%E5%8B%95--%E7%B5%82%E4%BA%86)
-      - [コンテナ起動してる？](#%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%A6%E3%82%8B)
-      - [起動中のコンテナに入る（とりあえずbash）](#%E8%B5%B7%E5%8B%95%E4%B8%AD%E3%81%AE%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%81%AB%E5%85%A5%E3%82%8B%E3%81%A8%E3%82%8A%E3%81%82%E3%81%88%E3%81%9Abash)
-      - [起動してないコンテナでコマンド実行する（初期セットアップとか）](#%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%A6%E3%81%AA%E3%81%84%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%81%A7%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B%E5%88%9D%E6%9C%9F%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97%E3%81%A8%E3%81%8B)
-      - [一括削除](#%E4%B8%80%E6%8B%AC%E5%89%8A%E9%99%A4)
-  - [rubyコンテナ for Rails](#ruby%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A-for-Rails)
-      - [初めの rails new まで](#%E5%88%9D%E3%82%81%E3%81%AE-rails-new-%E3%81%BE%E3%81%A7)
-      - [overmind使う時](#overmind%E4%BD%BF%E3%81%86%E6%99%82)
-  - [nodeコンテナ for Amplify](#node%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A-for-Amplify)
-  - [nodeコンテナ for React](#node%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A-for-React)
-      - [create-react-app を TypeScript で](#create-react-app-%E3%82%92-TypeScript-%E3%81%A7)
-  - [nodeコンテナ for Gatsby](#node%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A-for-Gatsby)
-      - [gatsby new まで](#gatsby-new-%E3%81%BE%E3%81%A7)
-  - [nodeコンテナ for Serverless](#node%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A-for-Serverless)
+  - [よく使う？Docker関連のコマンド](#%e3%82%88%e3%81%8f%e4%bd%bf%e3%81%86docker%e9%96%a2%e9%80%a3%e3%81%ae%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89)
+      - [起動 & 終了](#%e8%b5%b7%e5%8b%95--%e7%b5%82%e4%ba%86)
+      - [コンテナ起動してる？](#%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a%e8%b5%b7%e5%8b%95%e3%81%97%e3%81%a6%e3%82%8b)
+      - [起動中のコンテナに入る（とりあえずbash）](#%e8%b5%b7%e5%8b%95%e4%b8%ad%e3%81%ae%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a%e3%81%ab%e5%85%a5%e3%82%8b%e3%81%a8%e3%82%8a%e3%81%82%e3%81%88%e3%81%9abash)
+      - [起動してないコンテナでコマンド実行する（初期セットアップとか）](#%e8%b5%b7%e5%8b%95%e3%81%97%e3%81%a6%e3%81%aa%e3%81%84%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a%e3%81%a7%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e5%ae%9f%e8%a1%8c%e3%81%99%e3%82%8b%e5%88%9d%e6%9c%9f%e3%82%bb%e3%83%83%e3%83%88%e3%82%a2%e3%83%83%e3%83%97%e3%81%a8%e3%81%8b)
+      - [一括削除](#%e4%b8%80%e6%8b%ac%e5%89%8a%e9%99%a4)
+  - [rubyコンテナ for Rails](#ruby%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a-for-rails)
+      - [初めの rails new まで](#%e5%88%9d%e3%82%81%e3%81%ae-rails-new-%e3%81%be%e3%81%a7)
+      - [overmind使う時](#overmind%e4%bd%bf%e3%81%86%e6%99%82)
+  - [nodeコンテナ for Amplify](#node%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a-for-amplify)
+  - [nodeコンテナ for React](#node%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a-for-react)
+      - [create-react-app を TypeScript で](#create-react-app-%e3%82%92-typescript-%e3%81%a7)
+  - [nodeコンテナ for Gatsby](#node%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a-for-gatsby)
+      - [gatsby new まで](#gatsby-new-%e3%81%be%e3%81%a7)
+  - [slsコンテナ](#sls%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a)
+  - [samコンテナ](#sam%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a)
 
 
 ## よく使う？Docker関連のコマンド
@@ -166,7 +167,7 @@ docker-compose run node gatsby new .
 
 
 
-## nodeコンテナ for Serverless
+## slsコンテナ
 
 * serverlessはグローバルに置いてます。
 * まぁ、sam-cliと迷うよね
@@ -174,12 +175,12 @@ docker-compose run node gatsby new .
   https://serverless.com
 
 ```
-docker-compose run node serverless --template aws-ruby
+docker-compose run sls serverless --template aws-ruby
 ```
 
 ## samコンテナ
 
-* aws sam-cliはグローバルに置いてます。
+* aws sam-cliはホストのdockerを使うようにしてます。
 * まぁ、serverlessと迷うよね
 
   https://github.com/awslabs/aws-sam-cli

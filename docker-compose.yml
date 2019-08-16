@@ -75,6 +75,22 @@ services:
   #     - /var/run/docker.sock:/var/run/docker.sock
   #   tty: true
 
+  # sls:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfiles/sls.Dockerfile
+  #   container_name: sls
+  #   # command: bash -c 'sls'
+  #   ports:
+  #     - '3030:3000'
+  # #   depends_on:
+  # #     - localstack
+  #   env_file:
+  #     - ./Envfiles/sls.env
+  #   volumes:
+  #     - ./sls:/app:cached
+  #   tty: true
+
   # dynamodb-admin:
   #   build:
   #     context: .

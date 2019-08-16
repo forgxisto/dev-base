@@ -25,6 +25,5 @@ RUN  mkdir /root/.aws \
 
 # グローバルに置いておきたいパッケージ
 RUN  npm -g config set user root \
-  && npm install --global gatsby-cli \
-  && npm install --global @aws-amplify/cli \
-  && npm install --global serverless
+  && npm -g install gatsby-cli \
+  && npm -g install @aws-amplify/cli
