@@ -5,13 +5,14 @@ FROM node:slim
 
 WORKDIR /app
 
-RUN  apt-get -y -qq update \
-  && apt-get -y -qq upgrade \
-  && apt-get -y install build-essential \
-  && apt-get -y install git \
-  && apt-get -y install libpng-dev \
-  && apt-get -y install python-pip \
-  && apt-get clean \
+RUN  apt -y update \
+  && apt -y full-upgrade \
+  && apt -y install build-essential \
+  && apt -y install git \
+  && apt -y install libpng-dev \
+  && apt -y install python-pip \
+  && apt -y autoremove \
+  && apt -y clean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/* && \
   truncate -s 0 /var/log/*log
 

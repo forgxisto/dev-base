@@ -8,11 +8,13 @@ WORKDIR /app
 ENV GOPATH=/go
 ENV PATH="${PATH}:${GOPATH}/bin"
 
-RUN apt-get -y -qq update \
-  && apt-get -y -qq upgrade \
-  && apt-get -y install curl \
-  && apt-get -y install python-pip \
-  && apt-get clean \
+RUN apt -y update \
+  && apt -y full-upgrade \
+  && apt -y install curl \
+  && apt -y install python-pip \
+  && apt -y install nodejs \
+  && apt -y autoremove \
+  && apt -y clean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/* && \
   truncate -s 0 /var/log/*log
 
@@ -26,7 +28,5 @@ RUN mkdir /root/.aws \
   && echo '[default]\n' > /root/.aws/credentials
 
 # nodeとグローバルインストールするパッケージ
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-  && apt-get -y install nodejs \
-  && npm -g config set user root \
+RUN npm -g config set user root \
   && npm -g install serverless

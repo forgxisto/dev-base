@@ -3,4 +3,4 @@
 
 FROM node:alpine
 
-RUN npm install --global dynamodb-admin
+RUN npm install -g dynamodb-admin

@@ -8,19 +8,21 @@ WORKDIR /app
 ENV GOPATH=/go
 ENV PATH="${PATH}:${GOPATH}/bin"
 
-RUN apt-get -y -qq update \
-  && apt-get -y -qq upgrade \
-  && apt-get -y install curl \
-  && apt-get -y install build-essential \
-  && apt-get -y install git \
-  && apt-get -y install libsqlite3-dev \
-  && apt-get -y install libpq-dev \
-  && apt-get -y install mysql-client \
-  && apt-get -y install vim \
-  && apt-get -y install tmux \
-  && apt-get -y install golang \
-  && apt-get -y install python-pip \
-  && apt-get clean \
+RUN apt -y update \
+  && apt -y full-upgrade \
+  && apt -y install build-essential \
+  && apt -y install git \
+  && apt -y install curl \
+  && apt -y install libsqlite3-dev \
+  && apt -y install libpq-dev \
+  && apt -y install mysql-client \
+  && apt -y install vim \
+  && apt -y install tmux \
+  && apt -y install golang \
+  && apt -y install python-pip \
+  && apt -y install nodejs \
+  && apt -y autoremove \
+  && apt -y clean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/* && \
   truncate -s 0 /var/log/*log
 
@@ -32,9 +34,9 @@ RUN mkdir /root/.aws \
   && echo '[default]\n' > /root/.aws/config \
   && echo '[default]\n' > /root/.aws/credentials
 
-# node
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-  && apt-get -y install nodejs
+# Node.js
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+  && apt-get install -y nodejs
 
 # overmind
 RUN go get -u -f github.com/DarthSim/overmind
