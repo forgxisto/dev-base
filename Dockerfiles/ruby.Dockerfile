@@ -15,7 +15,7 @@ RUN apt -y update \
   && apt -y install curl \
   && apt -y install libsqlite3-dev \
   && apt -y install libpq-dev \
-  && apt -y install mysql-client \
+  && apt -y install default-mysql-client \
   && apt -y install vim \
   && apt -y install tmux \
   && apt -y install golang \
