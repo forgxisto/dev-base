@@ -20,7 +20,6 @@ RUN apt -y update \
   && apt -y install tmux \
   && apt -y install golang \
   && apt -y install python-pip \
-  && apt -y install nodejs \
   && apt -y autoremove \
   && apt -y clean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/* && \
@@ -36,7 +35,7 @@ RUN mkdir /root/.aws \
 
 # Node.js
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
-  && apt-get install -y nodejs
+  && apt -y install nodejs
 
 # overmind
 RUN go get -u -f github.com/DarthSim/overmind

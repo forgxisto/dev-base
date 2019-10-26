@@ -12,7 +12,6 @@ RUN apt -y update \
   && apt -y full-upgrade \
   && apt -y install curl \
   && apt -y install python-pip \
-  && apt -y install nodejs \
   && apt -y autoremove \
   && apt -y clean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/* && \
@@ -26,6 +25,10 @@ RUN  pip install awscli \
 RUN mkdir /root/.aws \
   && echo '[default]\n' > /root/.aws/config \
   && echo '[default]\n' > /root/.aws/credentials
+
+# Node.js
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+  && apt -y install nodejs
 
 # nodeとグローバルインストールするパッケージ
 RUN npm -g config set user root \
