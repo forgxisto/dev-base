@@ -26,7 +26,7 @@ RUN apt -y update \
   truncate -s 0 /var/log/*log
 
 # aws-cli
-RUN  pip install awscli
+RUN pip install awscli
 
 # aws-cli 用にダミーファイル作っておく
 RUN mkdir /root/.aws \
@@ -37,8 +37,15 @@ RUN mkdir /root/.aws \
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
   && apt -y install nodejs
 
+# Yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+  && apt -y update \
+  && apt -y install yarn
+
+
 # overmind
-RUN go get -u -f github.com/DarthSim/overmind
+# RUN go get -u -f github.com/DarthSim/overmind # なんかコケてる
 
 # エイリアスの代わり
 RUN echo '#!/bin/bash\nbundle exec $*' >> /usr/bin/bex \
