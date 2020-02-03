@@ -20,9 +20,9 @@ RUN  apt -y update \
 RUN  pip install awscli
 
 # aws-cli 用にダミーファイル作っておく
-RUN  mkdir /root/.aws \
-  && echo '[default]\n' > /root/.aws/config \
-  && echo '[default]\n' > /root/.aws/credentials
+RUN  mkdir ~/.aws \
+  && echo '[default]\n' > ~/.aws/config \
+  && echo '[default]\n' > ~/.aws/credentials
 
 # グローバルに置いておきたいパッケージ
 RUN  npm -g config set user root \

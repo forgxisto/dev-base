@@ -12,6 +12,7 @@ RUN  apt -y update \
   && apt -y install curl \
   && apt -y install file \
   && apt -y install git \
+  && apt -y install python-pip \
   && apt -y autoremove \
   && apt -y clean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/* && \
@@ -24,11 +25,14 @@ RUN curl -fsSL get.docker.com | sh
 RUN git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew
 RUN mkdir ~/.linuxbrew/bin
 RUN ln -s ~/.linuxbrew/Homebrew/bin/brew ~/.linuxbrew/bin
+
 ENV PATH $PATH:/root/.linuxbrew/bin:/root/.linuxbrew/sbin${PATH}
 
-# aws-cli, aws-sam-cli
+# aws-cli
+RUN pip install awscli
+
+# aws-sam-cli
 RUN brew tap aws/tap \
-  && brew install awscli \
   && brew install aws-sam-cli
 
 # aws-cli 用にダミーファイル作っておく

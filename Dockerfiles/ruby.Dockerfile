@@ -21,6 +21,7 @@ RUN apt -y update \
   && apt -y install vim \
   && apt -y install tmux \
   && apt -y install golang \
+  && apt -y install python-pip \
   && apt -y autoremove \
   && apt -y clean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/* && \
@@ -32,9 +33,8 @@ RUN mkdir ~/.linuxbrew/bin
 RUN ln -s ~/.linuxbrew/Homebrew/bin/brew ~/.linuxbrew/bin
 ENV PATH $PATH:/root/.linuxbrew/bin:/root/.linuxbrew/sbin${PATH}
 
-# aws-cli, aws-sam-cli
-RUN brew tap aws/tap \
-  && brew install awscli
+# aws-cli
+RUN pip install awscli
 
 # aws-cli 用にダミーファイル作っておく
 RUN  mkdir ~/.aws \

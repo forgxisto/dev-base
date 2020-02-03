@@ -22,9 +22,9 @@ RUN  pip install awscli \
   && pip install boto3
 
 # aws-cli 用にダミーファイル作っておく
-RUN mkdir /root/.aws \
-  && echo '[default]\n' > /root/.aws/config \
-  && echo '[default]\n' > /root/.aws/credentials
+RUN mkdir ~/.aws \
+  && echo '[default]\n' > ~/.aws/config \
+  && echo '[default]\n' > ~/.aws/credentials
 
 # Node.js
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
