@@ -24,12 +24,12 @@ RUN curl -fsSL get.docker.com | sh
 RUN git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew
 RUN mkdir ~/.linuxbrew/bin
 RUN ln -s ~/.linuxbrew/Homebrew/bin/brew ~/.linuxbrew/bin
-RUN echo 'export PATH="/root/.linuxbrew/bin:/root/.linuxbrew/sbin${PATH+:$PATH}"' >> ~/.bashrc
+ENV PATH $PATH:/root/.linuxbrew/bin:/root/.linuxbrew/sbin${PATH}
 
 # aws-cli, aws-sam-cli
-RUN ~/.linuxbrew/bin/brew tap aws/tap \
-  && ~/.linuxbrew/bin/brew install awscli \
-  && ~/.linuxbrew/bin/brew install aws-sam-cli
+RUN brew tap aws/tap \
+  && brew install awscli \
+  && brew install aws-sam-cli
 
 # aws-cli 用にダミーファイル作っておく
 RUN  mkdir ~/.aws \
