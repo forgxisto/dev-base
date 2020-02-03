@@ -66,24 +66,24 @@ services:
   #     DYNAMO_ENDPOINT: http://localstack:4569
   #     AWS_REGION: ap-notrheast-1
 
-  sam:
-    build:
-      context: .
-      dockerfile: ./Dockerfiles/sam.Dockerfile
-    container_name: sam
-    # command: bash -c 'sam local start-api --host 0.0.0.0'
-    ports:
-      - '3030:3000'
-  #   depends_on:
-  #     - localstack
-    environment:
-      SAM_DOCKER_VOLUME_BASEDIR: ${PWD}/sam
-    env_file:
-      - ./Envfiles/sam.env
-    volumes:
-      - ./sam:/app:cached
-      - /var/run/docker.sock:/var/run/docker.sock
-    tty: true
+  # sam:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfiles/sam.Dockerfile
+  #   container_name: sam
+  #   # command: bash -c 'sam local start-api --host 0.0.0.0'
+  #   ports:
+  #     - '3030:3000'
+  # #   depends_on:
+  # #     - localstack
+  #   environment:
+  #     SAM_DOCKER_VOLUME_BASEDIR: ${PWD}/sam
+  #   env_file:
+  #     - ./Envfiles/sam.env
+  #   volumes:
+  #     - ./sam:/app:cached
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   tty: true
 
   # sls:
   #   build:
