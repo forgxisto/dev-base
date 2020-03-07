@@ -192,3 +192,5 @@ docker-compose run sam sam init --runtime ruby
 cp -fr sam/app/* sam/
 rm -fr sam/app
 ```
+* bundle installを忘れないように・・・(https://github.com/awslabs/aws-sam-cli/issues/865)
+
