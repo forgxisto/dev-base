@@ -31,6 +31,9 @@ ENV PATH $PATH:/root/.linuxbrew/bin:/root/.linuxbrew/sbin${PATH}
 # aws-cli
 RUN pip install awscli
 
+# aws-cli-local
+RUN pip install awscli-local
+
 # aws-sam-cli
 RUN brew tap aws/tap \
   && brew install aws-sam-cli
