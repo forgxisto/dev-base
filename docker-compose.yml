@@ -1,6 +1,11 @@
 # http://docs.docker.jp/compose/rails.html
 # https://hub.docker.com/_/mysql/
 version: '3.7'
+
+networks:
+  default:
+    name: docker-lan
+
 services:
 
   # postgres:
@@ -49,7 +54,7 @@ services:
   #     HOSTNAME_EXTERNAL: localstack
   #     DATA_DIR: /tmp/localstack/data
   #     PORT_WEB_UI: 5000
-  #     USE_SSL: 1
+  #     USE_SSL: 0
   #   volumes:
   #     - ./localstack:/tmp/localstack
 
@@ -71,7 +76,7 @@ services:
   #     context: .
   #     dockerfile: ./Dockerfiles/sam.Dockerfile
   #   container_name: sam
-  #   # command: bash -c 'sam local start-api --host 0.0.0.0'
+  #   # command: bash -c 'sam local start-api --host 0.0.0.0 --docker-network docker-lan'
   #   ports:
   #     - '3030:3000'
   # #   depends_on:

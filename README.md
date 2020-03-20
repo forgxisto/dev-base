@@ -188,9 +188,15 @@ docker-compose run sls serverless --template aws-ruby
 samアプリはsamディレクトリ直下に置いてください・・
 
 ```
-docker-compose run sam sam init --runtime ruby
-cp -fr sam/app/* sam/
-rm -fr sam/app
+docker-compose run sam sam init --runtime ruby2.7
+cp -fr sam/sam-app/* sam/
+rm -fr sam/sam-app
 ```
 * bundle installを忘れないように・・・(https://github.com/awslabs/aws-sam-cli/issues/865)
 
+localstackと同時に使う時は、ネットワークの指定に注意
+
+```
+docker-compose exec sam bash
+sam local start-api --host 0.0.0.0 --docker-network docker-lan
+```
