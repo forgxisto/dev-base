@@ -112,15 +112,16 @@ version: '3.7'
 services:
   ruby:
     ~ 略 ~
-    command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
+    command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind s -D'
     ~ 略 ~
 ```
 
-別ターミナルから（閉じるしかなくなるので）
+別ターミナルから（もしくはバックグラウンドに回して）
 ```
 docker-compose exec ruby overmind c rails
   => overmindでrailsにコネクト
   => [ctrl]+[c]とかしちゃうとrails落とすことになるので気をつける
+  => 抜ける時は[ctrl]+[b] -> [d]
 ```
 
 

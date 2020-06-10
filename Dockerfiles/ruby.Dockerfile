@@ -52,7 +52,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
   && apt -y install yarn
 
 # overmind
-# RUN go get -u -f github.com/DarthSim/overmind # なんかコケてる
+# RUN GO111MODULE=on go get -u github.com/DarthSim/overmind/v2
 
 # エイリアスの代わり
 RUN echo '#!/bin/bash\nbundle exec $*' >> /usr/bin/bex \
