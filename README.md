@@ -61,6 +61,7 @@ docker-compose run コンテナ名 bash -c "コマンド"
 docker system prune      # 未使用まとめて（ネットワーク、コンテナ、イメージ）
 docker container prune   # 未使用コンテナ
 docker image prune       # 未使用イメージ（中間イメージ、壊れたやつとか）
+docker volume prune      # 未使用ボリューム
 ```
 
 
