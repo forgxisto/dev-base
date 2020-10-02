@@ -45,16 +45,12 @@ services:
 
   # localstack:
   #   image: localstack/localstack
-  #   ports:
-  #     - '4567-4584:4567-4584'
-  #     - '5000:5000'
   #   environment:
   #     DEFAULT_REGION: ap-notrheast-1
   #     HOSTNAME: localstack
   #     HOSTNAME_EXTERNAL: localstack
   #     DATA_DIR: /tmp/localstack/data
-  #     PORT_WEB_UI: 5000
-  #     USE_SSL: 0
+  #     SERVICES: serverless
   #   volumes:
   #     - ./localstack:/tmp/localstack
 
@@ -68,7 +64,7 @@ services:
   #   depends_on:
   #     - localstack
   #   environment:
-  #     DYNAMO_ENDPOINT: http://localstack:4569
+  #     DYNAMO_ENDPOINT: http://localstack:4566
   #     AWS_REGION: ap-notrheast-1
 
   # sam:
