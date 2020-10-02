@@ -35,8 +35,8 @@ RUN pip install awscli
 RUN pip install awscli-local
 
 # aws-sam-cli
-RUN brew tap aws/tap \
-  && brew install aws-sam-cli
+RUN brew tap aws/tap
+RUN brew install aws-sam-cli
 
 # aws-cli 用にダミーファイル作っておく
 RUN  mkdir ~/.aws \
