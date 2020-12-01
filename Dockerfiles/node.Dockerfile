@@ -5,11 +5,17 @@ FROM node:slim
 
 WORKDIR /app
 
+ENV GOPATH=/go
+ENV PATH="${PATH}:${GOPATH}/bin"
+
 RUN  apt -y update \
   && apt -y full-upgrade \
   && apt -y install build-essential \
   && apt -y install git \
   && apt -y install libpng-dev \
+  && apt -y install vim \
+  && apt -y install tmux \
+  && apt -y install golang \
   && apt -y install python-pip \
   && apt -y autoremove \
   && apt -y clean \
@@ -24,7 +30,13 @@ RUN  mkdir ~/.aws \
   && echo '[default]\n' > ~/.aws/config \
   && echo '[default]\n' > ~/.aws/credentials
 
+# overmind
+RUN go get golang.org/dl/go1.15 \
+  && go1.15 download \
+  && GO111MODULE=on go1.15 get -u github.com/DarthSim/overmind/v2
+
 # グローバルに置いておきたいパッケージ
-RUN  npm -g config set user root \
-  && npm -g install gatsby-cli \
-  && npm -g install @aws-amplify/cli
+RUN  yarn global add gatsby-cli \
+  && yarn global add @aws-amplify/cli \
+  && yarn global add typesync \
+  && yarn global upgrade --latest
