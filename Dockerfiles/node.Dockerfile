@@ -37,6 +37,10 @@ RUN go get golang.org/dl/go1.15 \
 
 # グローバルに置いておきたいパッケージ
 RUN  yarn global add gatsby-cli \
-  && yarn global add @aws-amplify/cli \
   && yarn global add typesync \
   && yarn global upgrade --latest
+
+# amplify cli は npm でインストールしないと問題がある・・・
+# Refs https://github.com/aws-amplify/amplify-cli/issues/3439
+RUN  npm -g config set user root \
+  && npm install -g @aws-amplify/cli
