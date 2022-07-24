@@ -8,13 +8,13 @@ networks:
 
 services:
 
-  # postgres:
-  #   image: postgres
-  #   restart: always
-  #   environment:
-  #     POSTGRES_PASSWORD: password
-  #   volumes:
-  #     - ./postgres:/var/lib/postgresql
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./Infra/postgres:/var/lib/postgresql
 
   # mysql:
   #   image: mysql
@@ -23,7 +23,7 @@ services:
   #   environment:
   #     MYSQL_ROOT_PASSWORD: password
   #   volumes:
-  #     - ./mysql:/var/lib/mysql
+  #     - ./Infra/mysql:/var/lib/mysql
 
   # mongo:
   #   image: mongo
@@ -32,7 +32,7 @@ services:
   #     MONGO_INITDB_ROOT_USERNAME: root
   #     MONGO_INITDB_ROOT_PASSWORD: password
   #   volumes:
-  #     - ./mongo:/data
+  #     - ./Infra/mongo:/data
 
   # mongo-express:
   #   image: mongo-express
@@ -52,7 +52,7 @@ services:
   #     DATA_DIR: /tmp/localstack/data
   #     SERVICES: serverless
   #   volumes:
-  #     - ./localstack:/tmp/localstack
+  #     - ./Infra/localstack:/tmp/localstack
 
   # dynamodb-admin:
   #   build:
@@ -82,7 +82,7 @@ services:
   #   env_file:
   #     - ./Envfiles/sam.env
   #   volumes:
-  #     - ./sam:/app:cached
+  #     - ./App/sam:/app:cached
   #     - /var/run/docker.sock:/var/run/docker.sock
   #   tty: true
 
@@ -99,30 +99,30 @@ services:
   #   env_file:
   #     - ./Envfiles/sls.env
   #   volumes:
-  #     - ./sls:/app:cached
+  #     - ./App/sls:/app:cached
   #   tty: true
 
-  # ruby:
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfiles/ruby.Dockerfile
-  #   container_name: ruby
-  #   ports:
-  #     - '3000:3000'
-  #   # command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
-  #   environment:
-  #     LANG: C.UTF-8
-  #     EDITOR: vim
-  #     BUNDLE_APP_CONFIG: /app/.bundle
-  #   env_file:
-  #     - ./Envfiles/ruby.env
-  #   # depends_on:
-  #     # - postgres
-  #     # - mysql
-  #   volumes:
-  #     - ./ruby:/app:cached
-  #     - ./ruby/bundle:/app/bundle
-  #   tty: true
+  ruby:
+    build:
+      context: .
+      dockerfile: ./Dockerfiles/ruby.Dockerfile
+    container_name: ruby
+    ports:
+      - '3000:3000'
+    # command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
+    environment:
+      LANG: C.UTF-8
+      EDITOR: vim
+      BUNDLE_APP_CONFIG: /app/.bundle
+    env_file:
+      - ./Envfiles/ruby.env
+    depends_on:
+      - postgres
+      # - mysql
+    volumes:
+      - ./App/ruby:/app:cached
+      - ./App/ruby/bundle:/app/bundle
+    tty: true
 
   # node:
   #   build:
@@ -135,8 +135,8 @@ services:
   #   env_file:
   #     - ./Envfiles/node.env
   #   volumes:
-  #     - ./node:/app:cached
-  #     - ./node/node_modules:/app/node_modules
+  #     - ./App/node:/app:cached
+  #     - ./App/node/node_modules:/app/node_modules
   #   tty: true
 
   # https-portal:
@@ -157,4 +157,4 @@ services:
   #     DOMAINS: 'loopback.forgxisto.com -> http://node:8000/'
   #     STAGE: local
   #   volumes:
-  #     - ./https-portal:/var/lib/https-portal
+  #     - ./Infra/https-portal:/var/lib/https-portal

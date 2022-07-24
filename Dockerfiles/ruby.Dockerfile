@@ -21,7 +21,7 @@ RUN apt -y update \
   && apt -y install vim \
   && apt -y install tmux \
   && apt -y install golang \
-  && apt -y install python-pip \
+  && apt -y install python3-pip \
   && apt -y autoremove \
   && apt -y clean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/* && \

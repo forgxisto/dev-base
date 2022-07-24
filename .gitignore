@@ -1,14 +1,13 @@
 .DS_Store
 
-https-portal
-localstack
-mongo
-mysql
-postgres
+Infra/https-portal
+Infra/localstack
+Infra/mongo
+Infra/mysql
+Infra/postgres
 
-ruby/vendor/bundle
-
-node/node_modules
-node/amplify/team-provider-info.json
+App/ruby/vendor/bundle
+App/node/node_modules
+App/node/amplify/team-provider-info.json
 
 Envfiles/*.env
