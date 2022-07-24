@@ -23,7 +23,7 @@ images:
   arch: "aarch64"
 
 mounts:
-# pwd
+# 作業ディレクトリにあわせて書き換えてからやりましょう。
 - location: "~/works/dev-base"
   writable: true
 - location: "/tmp/lima"
