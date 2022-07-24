@@ -8,13 +8,15 @@ networks:
 
 services:
 
-  postgres:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: password
-    volumes:
-      - ./Infra/postgres:/var/lib/postgresql
+  # postgres:
+  #   image: postgres
+  #   restart: always
+  #   ports:
+  #     - '5432:5432'
+  #   environment:
+  #     POSTGRES_PASSWORD: password
+  #   volumes:
+  #     - ./Infra/postgres:/var/lib/postgresql
 
   # mysql:
   #   image: mysql
@@ -102,27 +104,26 @@ services:
   #     - ./App/sls:/app:cached
   #   tty: true
 
-  ruby:
-    build:
-      context: .
-      dockerfile: ./Dockerfiles/ruby.Dockerfile
-    container_name: ruby
-    ports:
-      - '3000:3000'
-    # command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
-    environment:
-      LANG: C.UTF-8
-      EDITOR: vim
-      BUNDLE_APP_CONFIG: /app/.bundle
-    env_file:
-      - ./Envfiles/ruby.env
-    depends_on:
-      - postgres
-      # - mysql
-    volumes:
-      - ./App/ruby:/app:cached
-      - ./App/ruby/bundle:/app/bundle
-    tty: true
+  # ruby:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfiles/ruby.Dockerfile
+  #   container_name: ruby
+  #   ports:
+  #     - '3000:3000'
+  #   # command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
+  #   environment:
+  #     LANG: C.UTF-8
+  #     EDITOR: vim
+  #     BUNDLE_APP_CONFIG: /app/.bundle
+  #   env_file:
+  #     - ./Envfiles/ruby.env
+  #   depends_on:
+  #     - postgres
+  #     # - mysql
+  #   volumes:
+  #     - ./App/ruby:/app:cached
+  #   tty: true
 
   # node:
   #   build:
