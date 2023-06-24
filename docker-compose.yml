@@ -6,7 +6,54 @@ networks:
   default:
     name: docker-lan
 
+x-ruby: &ruby
+  build:
+    context: .
+    args:
+      RUBY_VERSION: '3.1.0'
+      PG_MAJOR: '14'
+      NODE_MAJOR: '16'
+      YARN_VERSION: '1.22.17'
+    dockerfile: ./Dockerfiles/ruby.Dockerfile
+    target: ${RAILS_ENV}
+  container_name: ruby
+  env_file:
+    - ./Envfiles/ruby.env
+  depends_on:
+    - postgres
+    # - mysql
+  volumes:
+    - ./App/ruby:/app:cached
+  tty: true
+
 services:
+
+  # rails:
+  #   <<: *ruby
+  #   container_name: rails
+  #   ports:
+  #     - '3000:3000'
+  #   command: 'bundle exec rails server -b 0.0.0.0'
+
+  # sidekiq:
+  #   <<: *ruby
+  #   container_name: sidekiq
+  #   command: 'bundle exec sidekiq -C config/sidekiq.yml'
+
+  # node:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfiles/node.Dockerfile
+  #   container_name: node
+  #   # command: bash -c 'gatsby develop --host 0.0.0.0'
+  #   ports:
+  #     - '8000:8000'
+  #   env_file:
+  #     - ./Envfiles/node.env
+  #   volumes:
+  #     - ./App/node:/app:cached
+  #     - ./App/node/node_modules:/app/node_modules
+  #   tty: true
 
   # postgres:
   #   image: postgres
@@ -102,42 +149,6 @@ services:
   #     - ./Envfiles/sls.env
   #   volumes:
   #     - ./App/sls:/app:cached
-  #   tty: true
-
-  # ruby:
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfiles/ruby.Dockerfile
-  #   container_name: ruby
-  #   ports:
-  #     - '3000:3000'
-  #   # command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind start'
-  #   environment:
-  #     LANG: C.UTF-8
-  #     EDITOR: vim
-  #     BUNDLE_APP_CONFIG: /app/.bundle
-  #   env_file:
-  #     - ./Envfiles/ruby.env
-  #   depends_on:
-  #     - postgres
-  #     # - mysql
-  #   volumes:
-  #     - ./App/ruby:/app:cached
-  #   tty: true
-
-  # node:
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfiles/node.Dockerfile
-  #   container_name: node
-  #   # command: bash -c 'gatsby develop --host 0.0.0.0'
-  #   ports:
-  #     - '8000:8000'
-  #   env_file:
-  #     - ./Envfiles/node.env
-  #   volumes:
-  #     - ./App/node:/app:cached
-  #     - ./App/node/node_modules:/app/node_modules
   #   tty: true
 
   # https-portal:
