@@ -75,7 +75,6 @@ docker volume prune      # 未使用ボリューム
 ```
 
 
-
 ## rubyコンテナ for Rails
 
 * 初期イメージの中身はDockerfiles/ruby.Dockerfileを参照。
@@ -87,53 +86,23 @@ docker volume prune      # 未使用ボリューム
 * サーバ起動するときはhost, portに気をつけましょう
 
 ```
-docker-compose run ruby bundle init
+docker-compose run rails bundle init
   => Gemfileが作成されるのでrailsのコメントアウトを外す
 
-docker-compose run ruby bundle install --path vendor/bundle
+docker-compose run rails bundle install --path vendor/bundle
   => railsインストール
 
-docker-compose run ruby bundle exec rails new . --force --skip-bundle
+docker-compose run rails bundle exec rails new . --force --skip-bundle
   => Railsアプリケーション作成, オプションは任意（データベースなど）
   => Gemfileを適宜編集する
 
-docker-compose run ruby bin/setup
+docker-compose run rails bin/setup
   => アプリ用 gemインストール
 
-docker-compose run ruby bundle exec rake db:create db:create
+docker-compose run rails bundle exec rake db:create db:migrate
   => DBセットアップ
 ```
 
-#### overmind使う時
-
-https://github.com/DarthSim/overmind
-
-* docker-compose.ymlのcommandで起動してるやつをpryで止めたい時とか
-* sidekiqとかも一緒に起動したい時とか
-* いろいろめんどくさい時とか
-
-Procfileを作る
-```
-rails: bundle exec rails s -b 0.0.0.0 -p 3000
-```
-
-docker-compose.ymlのcommandを追加して `up` したら `rails s` するようにする
-```
-version: '3.7'
-services:
-  ruby:
-    ~ 略 ~
-    command: bash -c 'rm -f tmp/pids/* && rm -f .overmind.sock && overmind s -D'
-    ~ 略 ~
-```
-
-別ターミナルから（もしくはバックグラウンドに回して）
-```
-docker-compose exec ruby overmind c rails
-  => overmindでrailsにコネクト
-  => [ctrl]+[c]とかしちゃうとrails落とすことになるので気をつける
-  => 抜ける時は[ctrl]+[b] -> [d]
-```
 
 
 ## nodeコンテナ for Amplify

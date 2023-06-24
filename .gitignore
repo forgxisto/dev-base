@@ -11,3 +11,4 @@ App/node/node_modules
 App/node/amplify/team-provider-info.json
 
 Envfiles/*.env
+.env

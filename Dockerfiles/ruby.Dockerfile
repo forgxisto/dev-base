@@ -1,14 +1,18 @@
 # http://docs.docker.jp/compose/rails.html
 # https://hub.docker.com/r/library/ruby/
 
-FROM ruby:slim
+ARG RUBY_VERSION
+ARG DISTRO_NAME=bullseye
 
-WORKDIR /app
+FROM ruby:$RUBY_VERSION-slim-$DISTRO_NAME AS base
 
-ENV GOPATH=/go
-ENV PATH="${PATH}:${GOPATH}/bin"
+ARG DISTRO_NAME
 
-RUN apt -y update \
+# Common dependencies
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt,sharing=locked \
+  --mount=type=tmpfs,target=/var/log \
+  apt -y update \
   && apt -y full-upgrade \
   && apt -y install locales locales-all \
   && apt -y install build-essential \
@@ -19,43 +23,46 @@ RUN apt -y update \
   && apt -y install libpq-dev \
   && apt -y install default-mysql-client \
   && apt -y install vim \
-  && apt -y install tmux \
-  && apt -y install golang \
-  && apt -y install python3-pip \
   && apt -y autoremove \
   && apt -y clean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/* && \
   truncate -s 0 /var/log/*log
 
-# linuxbrew
-RUN git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew
-RUN mkdir ~/.linuxbrew/bin
-RUN ln -s ~/.linuxbrew/Homebrew/bin/brew ~/.linuxbrew/bin
-ENV PATH $PATH:/root/.linuxbrew/bin:/root/.linuxbrew/sbin${PATH}
-
-# aws-cli
-RUN pip install awscli
-
-# aws-cli 用にダミーファイル作っておく
-RUN  mkdir ~/.aws \
-  && echo '[default]\n' > ~/.aws/config \
-  && echo '[default]\n' > ~/.aws/credentials
-
-# Node.js
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+# Install NodeJS and Yarn
+ARG NODE_MAJOR
+ARG YARN_VERSION
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt,sharing=locked \
+  --mount=type=tmpfs,target=/var/log \
+  curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash - \
   && apt -y install nodejs
+RUN npm install -g yarn@$YARN_VERSION
 
-# Yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-  && apt -y update \
-  && apt -y install yarn
+# Configure bundler
+ENV LANG=C.UTF-8 \
+  BUNDLE_JOBS=4 \
+  BUNDLE_RETRY=3
 
-# overmind
-RUN go get golang.org/dl/go1.15 \
-  && go1.15 download \
-  && GO111MODULE=on go1.15 get -u github.com/DarthSim/overmind/v2
+# Store Bundler settings in the project's root
+ENV BUNDLE_APP_CONFIG=.bundle
 
-# エイリアスの代わり
-RUN echo '#!/bin/bash\nbundle exec $*' >> /usr/bin/bex \
-  && chmod +x /usr/bin/bex
+WORKDIR /app
+
+EXPOSE 3000
+CMD ["/usr/bin/bash"]
+
+# ================================================= For development
+FROM base AS development
+
+ENV RAILS_ENV=development
+
+# ================================================= For production
+FROM base AS production
+
+ENV RAILS_ENV=production
+
+COPY ../App/ruby/ ./
+RUN bundle install --quiet --jobs=${BUNDLE_JOBS}
+RUN yarn --check-files --silent && yarn cache clean
+
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
