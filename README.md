@@ -85,7 +85,10 @@ docker volume prune      # 未使用ボリューム
 docker-compose run rails bundle init
   => Gemfileが作成されるのでrailsのコメントアウトを外す
 
-docker-compose run rails bundle install --path vendor/bundle
+docker-compose run rails bundle config set path 'vendor/bundle'
+  => gem のインストールパスを指定する
+
+docker-compose run rails bundle install
   => railsインストール
 
 docker-compose run rails bundle exec rails new . --force --skip-bundle

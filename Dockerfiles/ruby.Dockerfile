@@ -6,7 +6,13 @@ ARG DISTRO_NAME=bookworm
 
 FROM ruby:$RUBY_VERSION-slim-$DISTRO_NAME AS base
 
-ARG DISTRO_NAME
+WORKDIR /ruby-app
+
+# Configure bundler
+ENV LANG=C.UTF-8 \
+  BUNDLE_JOBS=4 \
+  BUNDLE_RETRY=3 \
+  BUNDLE_APP_CONFIG=.bundle
 
 # Common dependencies
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -39,16 +45,6 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
   && apt -y install nodejs
 RUN npm install -g yarn@$YARN_VERSION
 
-# Configure bundler
-ENV LANG=C.UTF-8 \
-  BUNDLE_JOBS=4 \
-  BUNDLE_RETRY=3
-
-# Store Bundler settings in the project's root
-ENV BUNDLE_APP_CONFIG=.bundle
-
-WORKDIR /app
-
 EXPOSE 3000
 CMD ["/usr/bin/bash"]
 
@@ -60,16 +56,37 @@ ENV RAILS_ENV=development
 # ================================================= For production
 FROM base AS production-builder
 
+WORKDIR /ruby-app
+
 ENV RAILS_ENV=production
 
+# Configure bundler
+ENV LANG=C.UTF-8 \
+  BUNDLE_JOBS=4 \
+  BUNDLE_RETRY=3 \
+  BUNDLE_PATH=/ruby-app/vendor/bundle
+
 # Copy source
-COPY ../App/ruby/ ./
+COPY ../App/ruby/ .
 # Build source
 RUN bundle install --quiet --jobs=${BUNDLE_JOBS}
 RUN yarn --check-files --silent && yarn cache clean
 RUN bundle exec rails assets:precompile
 
+EXPOSE 3000
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+
 FROM ruby:$RUBY_VERSION-slim-$DISTRO_NAME AS production
+
+WORKDIR /ruby-app
+
+ENV RAILS_ENV=production
+
+# Configure bundler
+ENV LANG=C.UTF-8 \
+  BUNDLE_JOBS=4 \
+  BUNDLE_RETRY=3 \
+  BUNDLE_PATH=/ruby-app/vendor/bundle
 
 # Production-only dependencies
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -88,13 +105,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 RUN gem update --system && \
     gem install bundler
 
-ENV RAILS_ENV=production
-
-EXPOSE 3000
-
 # Copy source
-COPY ../App/ruby/ ./
+COPY ../App/ruby .
 # Copy artifacts
 COPY --from=production-builder $BUNDLE_PATH $BUNDLE_PATH
+COPY --from=production-builder /ruby-app/public /ruby-app/public
 
+EXPOSE 3000
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
