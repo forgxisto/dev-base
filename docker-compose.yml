@@ -63,7 +63,7 @@ services:
   #   environment:
   #     POSTGRES_PASSWORD: password
   #   volumes:
-  #     - ./Infra/postgres:/var/lib/postgresql
+  #     - ./LocalData/postgres:/var/lib/postgresql
 
   # mysql:
   #   image: mysql
@@ -72,7 +72,7 @@ services:
   #   environment:
   #     MYSQL_ROOT_PASSWORD: password
   #   volumes:
-  #     - ./Infra/mysql:/var/lib/mysql
+  #     - ./LocalData/mysql:/var/lib/mysql
 
   # mongo:
   #   image: mongo
@@ -81,7 +81,7 @@ services:
   #     MONGO_INITDB_ROOT_USERNAME: root
   #     MONGO_INITDB_ROOT_PASSWORD: password
   #   volumes:
-  #     - ./Infra/mongo:/data
+  #     - ./LocalData/mongo:/data
 
   # mongo-express:
   #   image: mongo-express
@@ -101,7 +101,7 @@ services:
   #     DATA_DIR: /tmp/localstack/data
   #     SERVICES: serverless
   #   volumes:
-  #     - ./Infra/localstack:/tmp/localstack
+  #     - ./LocalData/localstack:/tmp/localstack
 
   # dynamodb-admin:
   #   build:
@@ -169,4 +169,4 @@ services:
   #     DOMAINS: 'loopback.forgxisto.com -> http://node:8000/'
   #     STAGE: local
   #   volumes:
-  #     - ./Infra/https-portal:/var/lib/https-portal
+  #     - ./LocalData/https-portal:/var/lib/https-portal

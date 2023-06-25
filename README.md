@@ -26,16 +26,6 @@ AWSなど外部サービスの認証情報を環境変数として渡す場合�
   - [samコンテナ](#sam%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a)
 
 
-## Lima 使うときは
-
-同梱の `lima-app.yaml ` をプロジェクトごとにリネームして作業ディレクトリも書き換えてから `limactl start xxxx.yaml` しましょう。
-
-https://github.com/lima-vm/lima
-
-1. `lima-app.yaml` をリネーム
-2. yaml 内の mounts: location を書き換える
-3. lima 起動後、表示されるメッセージの通り `docker context create xxx` からの `docker context use xxx` で docker 使えるようになるよ。
-
 ## よく使う？Docker関連のコマンド
 
 #### 起動 & 終了
@@ -55,6 +45,12 @@ docker-compose ps
 
 ```
 docker-compose exec コンテナ名 bash
+```
+
+#### 起動中のコンテナを再起動
+
+```
+docker-compose restart コンテナ名
 ```
 
 #### 起動してないコンテナでコマンド実行する（初期セットアップとか）

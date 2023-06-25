@@ -1,10 +1,10 @@
 .DS_Store
 
-Infra/https-portal
-Infra/localstack
-Infra/mongo
-Infra/mysql
-Infra/postgres
+LocalData/https-portal
+LocalData/localstack
+LocalData/mongo
+LocalData/mysql
+LocalData/postgres
 
 App/ruby/vendor/bundle
 App/node/node_modules
