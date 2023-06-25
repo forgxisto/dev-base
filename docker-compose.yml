@@ -10,10 +10,10 @@ x-ruby: &ruby
   build:
     context: .
     args:
-      RUBY_VERSION: '3.1.0'
-      PG_MAJOR: '14'
-      NODE_MAJOR: '16'
-      YARN_VERSION: '1.22.17'
+      RUBY_VERSION: '3.2.2'
+      PG_MAJOR: '15'
+      NODE_MAJOR: '18'
+      YARN_VERSION: '1.22.19'
     dockerfile: ./Dockerfiles/ruby.Dockerfile
     target: ${RAILS_ENV}
   container_name: ruby
