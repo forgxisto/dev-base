@@ -6,7 +6,7 @@ ARG DISTRO_NAME=bookworm
 
 FROM ruby:$RUBY_VERSION-slim-$DISTRO_NAME AS base
 
-WORKDIR /ruby-app
+WORKDIR /app
 
 # Configure bundler
 ENV LANG=C.UTF-8 \
@@ -56,7 +56,7 @@ ENV RAILS_ENV=development
 # ================================================= For production
 FROM base AS production-builder
 
-WORKDIR /ruby-app
+WORKDIR /app
 
 ENV RAILS_ENV=production
 
@@ -64,7 +64,7 @@ ENV RAILS_ENV=production
 ENV LANG=C.UTF-8 \
   BUNDLE_JOBS=4 \
   BUNDLE_RETRY=3 \
-  BUNDLE_PATH=/ruby-app/vendor/bundle
+  BUNDLE_PATH=/app/vendor/bundle
 
 # Copy source
 COPY ../App/ruby/ .
@@ -78,7 +78,7 @@ CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 
 FROM ruby:$RUBY_VERSION-slim-$DISTRO_NAME AS production
 
-WORKDIR /ruby-app
+WORKDIR /app
 
 ENV RAILS_ENV=production
 
@@ -86,7 +86,7 @@ ENV RAILS_ENV=production
 ENV LANG=C.UTF-8 \
   BUNDLE_JOBS=4 \
   BUNDLE_RETRY=3 \
-  BUNDLE_PATH=/ruby-app/vendor/bundle
+  BUNDLE_PATH=/app/vendor/bundle
 
 # Production-only dependencies
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -109,7 +109,7 @@ RUN gem update --system && \
 COPY ../App/ruby .
 # Copy artifacts
 COPY --from=production-builder $BUNDLE_PATH $BUNDLE_PATH
-COPY --from=production-builder /ruby-app/public /ruby-app/public
+COPY --from=production-builder /app/public /app/public
 
 EXPOSE 3000
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
