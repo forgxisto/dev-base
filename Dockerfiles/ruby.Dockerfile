@@ -15,38 +15,30 @@ ENV LANG=C.UTF-8 \
   BUNDLE_APP_CONFIG=.bundle
 
 # Common dependencies
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-  --mount=type=cache,target=/var/lib/apt,sharing=locked \
-  --mount=type=tmpfs,target=/var/log \
-  apt -y update \
+RUN apt -y update \
   && apt -y full-upgrade \
   && apt -y install build-essential \
-    locales locales-all \
-    build-essential \
     curl \
-    file \
     git \
     libsqlite3-dev \
     libpq-dev \
     default-mysql-client \
+    locales \
     vim \
   && apt -y autoremove \
   && apt -y clean \
-  && rm -rf /var/lib/apt/lists/* /var/tmp/* && \
-  truncate -s 0 /var/log/*log
+  && rm -rf /var/lib/apt/lists/* /var/tmp/* \
+  && truncate -s 0 /var/log/*log
 
 # Install NodeJS and Yarn
 ARG NODE_MAJOR
 ARG YARN_VERSION
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-  --mount=type=cache,target=/var/lib/apt,sharing=locked \
-  --mount=type=tmpfs,target=/var/log \
-  curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash - \
-  && apt -y install nodejs
-RUN npm install -g yarn@$YARN_VERSION
+RUN curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash - \
+  && apt -y install nodejs \
+  && npm install -g yarn@$YARN_VERSION
 
 EXPOSE 3000
-CMD ["/usr/bin/bash"]
+CMD ["/bin/bash"]
 
 # ================================================= For development
 FROM base AS development
@@ -89,16 +81,14 @@ ENV LANG=C.UTF-8 \
   BUNDLE_PATH=/app/vendor/bundle
 
 # Production-only dependencies
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-  --mount=type=cache,target=/var/lib/apt,sharing=locked \
-  --mount=type=tmpfs,target=/var/log \
-  apt -y update \
+RUN apt -y update \
   && apt -y full-upgrade \
-  && apt -y install build-essential \
-    curl \
-    tzdata \
-    time \
+  && apt -y install tzdata \
     locales \
+  && apt -y autoremove \
+  && apt -y clean \
+  && rm -rf /var/lib/apt/lists/* /var/tmp/* \
+  && truncate -s 0 /var/log/*log \
   && update-locale LANG=C.UTF-8 LC_ALL=C.UTF-8
 
 # Upgrade RubyGems and install the latest Bundler version

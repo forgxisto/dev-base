@@ -75,31 +75,26 @@ docker volume prune      # 未使用ボリューム
 
 * 初期イメージの中身はDockerfiles/ruby.Dockerfileを参照。
 * Procfileを作ればovermindでも起動できるようにしてある。
-* `bundle exec` のエイリアス代替スクリプトは好みで。手抜きしすぎ？
 
 #### 初めの rails new まで
 
 * サーバ起動するときはhost, portに気をつけましょう
 
 ```
+# Gemfileを作成する
 docker-compose run rails bundle init
-  => Gemfileが作成されるのでrailsのコメントアウトを外す
 
+# gem のインストールパスを指定する
 docker-compose run rails bundle config set path 'vendor/bundle'
-  => gem のインストールパスを指定する
 
+# railsインストール
 docker-compose run rails bundle install
-  => railsインストール
 
+# Railsアプリケーション作成, オプションは任意（データベースなど）
 docker-compose run rails bundle exec rails new . --force --skip-bundle
-  => Railsアプリケーション作成, オプションは任意（データベースなど）
-  => Gemfileを適宜編集する
 
+# セットアップ
 docker-compose run rails bin/setup
-  => アプリ用 gemインストール
-
-docker-compose run rails bundle exec rake db:create db:migrate
-  => DBセットアップ
 ```
 
 
