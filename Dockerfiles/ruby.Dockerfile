@@ -1,7 +1,7 @@
 # http://docs.docker.jp/compose/rails.html
 # https://hub.docker.com/r/library/ruby/
 
-ARG RUBY_VERSION
+ARG RUBY_VERSION='3.2.2'
 ARG DISTRO_NAME=bookworm
 
 FROM ruby:$RUBY_VERSION-slim-$DISTRO_NAME AS base
@@ -31,8 +31,8 @@ RUN apt -y update \
   && truncate -s 0 /var/log/*log
 
 # Install NodeJS and Yarn
-ARG NODE_MAJOR
-ARG YARN_VERSION
+ARG NODE_MAJOR='18'
+ARG YARN_VERSION='1.22.19'
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash - \
   && apt -y install nodejs \
   && npm install -g yarn@$YARN_VERSION
